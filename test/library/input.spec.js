@@ -4,7 +4,7 @@ import TextField from 'material-ui/TextField';
 
 import NumberFormat from '../../src/number_format';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {simulateKeyInput, shallow, mount} from '../test_util';
+import { simulateKeyInput, shallow, mount } from '../test_util';
 
 /*** format_number input as input ****/
 describe('NumberFormat as input', () => {
@@ -29,13 +29,13 @@ describe('NumberFormat as input', () => {
   it('should not reset number inputs value if number input renders again with same props', () => {
     class WrapperComponent extends React.Component {
       constructor() {
-        super ();
+        super();
         this.state = {
           testState: false
         };
       }
       render() {
-        return (<NumberFormat thousandSeparator={true} prefix={'$'}/>)
+        return (<NumberFormat thousandSeparator={true} prefix={'$'} />)
       }
     }
 
@@ -47,7 +47,7 @@ describe('NumberFormat as input', () => {
 
     expect(domInput.value).toEqual('$2,456,981');
 
-    wrapper.setState({testState: true});
+    wrapper.setState({ testState: true });
 
     expect(domInput.value).toEqual('$2,456,981');
   });
@@ -68,9 +68,9 @@ describe('NumberFormat as input', () => {
 
   it('should block inputs based on isAllowed callback', () => {
     const wrapper = shallow(<NumberFormat isAllowed={(values) => {
-      const {floatValue} = values;
+      const { floatValue } = values;
       return floatValue <= 10000;
-    }} value={9999}/>);
+    }} value={9999} />);
 
     const input = wrapper.find('input');
 
@@ -91,13 +91,13 @@ describe('NumberFormat as input', () => {
       )
     }
 
-    const wrapper = mount(<WrapperComponent customInput={TextField} thousandSeparator={'.'} decimalSeparator={','}/>);
+    const wrapper = mount(<WrapperComponent customInput={TextField} thousandSeparator={'.'} decimalSeparator={','} />);
     const input = wrapper.find('input');
 
     simulateKeyInput(input, '2456981,89', 0);
     expect(input.instance().value).toEqual('2.456.981,89');
 
-    wrapper.setProps({format: '#### #### #### ####', mask: '_', value: ''});
+    wrapper.setProps({ format: '#### #### #### ####', mask: '_', value: '' });
 
     simulateKeyInput(input, '411111', 0);
     expect(input.instance().value).toEqual('4111 11__ ____ ____');
@@ -105,7 +105,7 @@ describe('NumberFormat as input', () => {
 
   describe('Test masking', () => {
     it('should allow mask as string', () => {
-      const wrapper = shallow(<NumberFormat format="#### #### ####" mask="_"/>);
+      const wrapper = shallow(<NumberFormat format="#### #### ####" mask="_" />);
 
       simulateKeyInput(wrapper.find('input'), '111', 0);
       expect(wrapper.state().value).toEqual('111_ ____ ____');
@@ -115,7 +115,7 @@ describe('NumberFormat as input', () => {
     });
 
     it('should allow mask as array of strings', () => {
-      const wrapper = shallow(<NumberFormat format="##/##/####" mask={['D', 'D', 'M', 'M', 'Y', 'Y', 'Y', 'Y']}/>);
+      const wrapper = shallow(<NumberFormat format="##/##/####" mask={['D', 'D', 'M', 'M', 'Y', 'Y', 'Y', 'Y']} />);
 
       simulateKeyInput(wrapper.find('input'), '1', 0);
       expect(wrapper.state().value).toEqual('1D/MM/YYYY');
@@ -126,12 +126,23 @@ describe('NumberFormat as input', () => {
 
     it('should throw an error if mask has numeric character', () => {
       expect(() => {
-        shallow(<NumberFormat format="#### #### ####" mask="1"/>)
+        shallow(<NumberFormat format="#### #### ####" mask="1" />)
       }).toThrow()
 
       expect(() => {
-        shallow(<NumberFormat format="#### #### ####" mask={['D', 'D', 'M', '1', '2', 'Y', 'Y', 'Y']}/>)
+        shallow(<NumberFormat format="#### #### ####" mask={['D', 'D', 'M', '1', '2', 'Y', 'Y', 'Y']} />)
       }).toThrow()
     })
   })
+
+  describe('onBadInput', () => {
+
+    it(`it calls onBadInput if the input value doesnt change due to a user's input`, () => {
+      //sinon or jest.fn here?
+      let badInputCalled = false;
+      const wrapper = shallow(<NumberFormat onBadInput={() => badInputCalled = true} />);
+      simulateKeyInput(wrapper.find('input'), 'a', 0);
+      expect(badInputCalled).toBe(true);
+    });
+  });
 });

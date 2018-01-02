@@ -52,6 +52,7 @@ import * as NumberFormat from 'react-number-format';
 | mask | String (ex : _) | `' '` | If mask defined, component will show non entered placed with masked value. |
 | customInput | Component Reference | input | This allow supporting custom inputs with number format. |
 | onValueChange | (values) => {} | none | onValueChange handler accepts [values object](#values-object) |
+| onBadInput | ({value:string}) => {} | none | A function that is called if the user input didn't change the contents of the input. |
 | isAllowed | ([values](#values-object)) => true or false | none | A checker function to check if input value is valid or not |
 | renderText | (formattedValue) => React Element | null | A renderText method useful if you want to render formattedValue in different element other than span. |
 | getInputRef | (elm) => void | null | Method to get reference of input or span based on displayType prop. See [Getting reference](#getting-reference)

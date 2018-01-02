@@ -1,7 +1,7 @@
 /*!
  * react-number-format - 3.1.2
  * Author : Sudhanshu Yadav
- * Copyright (c) 2016,2017 to Sudhanshu Yadav - ignitersworld.com , released under the MIT license.
+ * Copyright (c) 2016,2018 to Sudhanshu Yadav - ignitersworld.com , released under the MIT license.
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -106,6 +106,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  customInput: _propTypes2.default.func,
 	  allowNegative: _propTypes2.default.bool,
 	  onValueChange: _propTypes2.default.func,
+	  onBadInput: _propTypes2.default.func,
 	  onKeyDown: _propTypes2.default.func,
 	  onMouseUp: _propTypes2.default.func,
 	  onChange: _propTypes2.default.func,
@@ -127,6 +128,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  isNumericString: false,
 	  type: 'text',
 	  onValueChange: _utils.noop,
+	  onBadInput: _utils.noop,
 	  onChange: _utils.noop,
 	  onKeyDown: _utils.noop,
 	  onMouseUp: _utils.noop,
@@ -800,6 +802,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          props.onChange(e);
 	        });
 	      } else {
+	        props.onBadInput({ value: inputValue });
 	        props.onChange(e);
 	      }
 	    }
