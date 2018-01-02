@@ -802,8 +802,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	          props.onChange(e);
 	        });
 	      } else {
-	        props.onBadInput({ value: inputValue });
 	        props.onChange(e);
+	        props.onBadInput({ value: inputValue });
 	      }
 	    }
 	  }, {

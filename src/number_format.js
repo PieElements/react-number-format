@@ -630,8 +630,8 @@ class NumberFormat extends React.Component {
         props.onChange(e);
       });
     } else {
-      props.onBadInput({ value: inputValue });
       props.onChange(e);
+      props.onBadInput({ value: inputValue });
     }
   }
 
